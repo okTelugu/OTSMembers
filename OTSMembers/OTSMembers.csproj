@@ -243,6 +243,7 @@
     <Content Include="Views\OtsMembers\Details.cshtml" />
     <Content Include="Views\OtsMembers\Edit.cshtml" />
     <Content Include="Views\OtsMembers\Index.cshtml" />
+    <Content Include="Views\OtsMembers\_Sponsorships.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

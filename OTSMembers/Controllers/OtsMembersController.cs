@@ -46,7 +46,7 @@ namespace OTSMembers.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,FirstName,LastName,SpouseName,StreeAddress,City,State,Zip,Notes,OkToPublish")] OtsMember otsMember)
+        public ActionResult Create([Bind(Include = "id,FirstName,LastName,SpouseName,Email,StreetAddress,City,State,Zip,Notes,OkToPublish")] OtsMember otsMember)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace OTSMembers.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,FirstName,LastName,SpouseName,StreeAddress,City,State,Zip,Notes,OkToPublish")] OtsMember otsMember)
+        public ActionResult Edit([Bind(Include = "id,FirstName,LastName,SpouseName,Email,StreetAddress,City,State,Zip,Notes,OkToPublish")] OtsMember otsMember)
         {
             if (ModelState.IsValid)
             {

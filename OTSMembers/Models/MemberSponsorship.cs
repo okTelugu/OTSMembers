@@ -18,6 +18,7 @@ namespace OTSMembers.Models
         public decimal Amount { get; set; }
         public ModeOfPayment TypeOfPayment  { get; set; }
         public string ReferredBy { get; set; }
-        public bool Anonymous { get; set; }
+        public string PaymentID { get; set; }
+        public string Occassion { get; set; }
     }
 }

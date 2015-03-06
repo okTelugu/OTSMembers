@@ -52,3 +52,6 @@ c:\users\pramod vadrevu\documents\visual studio 2013\Projects\OTSMembers\OTSMemb
 c:\users\pramod vadrevu\documents\visual studio 2013\Projects\OTSMembers\OTSMembers\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 c:\users\pramod vadrevu\documents\visual studio 2013\Projects\OTSMembers\OTSMembers\obj\Debug\OTSMembers.dll
 c:\users\pramod vadrevu\documents\visual studio 2013\Projects\OTSMembers\OTSMembers\obj\Debug\OTSMembers.pdb
+c:\users\pramod vadrevu\documents\visual studio 2013\Projects\OTSMembers\OTSMembers\obj\Debug\OTSMembers.csprojResolveAssemblyReference.cache
+c:\users\pramod vadrevu\documents\visual studio 2013\Projects\OTSMembers\OTSMembers\obj\Debug\OTSMembers.Migrations.InitialCreate.resources
+c:\users\pramod vadrevu\documents\visual studio 2013\Projects\OTSMembers\OTSMembers\obj\Debug\OTSMembers.csproj.GenerateResource.Cache
