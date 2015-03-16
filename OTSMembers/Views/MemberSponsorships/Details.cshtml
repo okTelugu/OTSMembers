@@ -1,0 +1,74 @@
+﻿@model OTSMembers.Models.MemberSponsorship
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MemberSponsorship</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfPayment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfPayment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReferredBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReferredBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Occassion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Occassion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OtsMember_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OtsMember_id)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

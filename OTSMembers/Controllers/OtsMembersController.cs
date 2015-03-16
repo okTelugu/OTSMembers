@@ -14,10 +14,39 @@ namespace OTSMembers.Controllers
     {
         private OtsDb db = new OtsDb();
 
-        // GET: OtsMembers
-        public ActionResult Index()
+        public ActionResult Sponsorships(int? memberID)
         {
-            return View(db.OTSMembers.ToList());
+            var model = db.Sponsorships.Where(s => s.OtsMember_id == memberID).ToList();
+            return PartialView(model);
+        }
+
+        // GET: OtsMembers
+        //[Authorize(Roles="Admin")]
+        public ActionResult Index(string searchEmail = null, string firstName =null, string lastName =null)
+        {
+            if (searchEmail != null)
+            {
+                var model = db.OTSMembers
+                .Where(r => r.Email.Equals(searchEmail, StringComparison.InvariantCultureIgnoreCase));
+                return View(model);
+            }
+            else if (lastName != null)
+            {
+                var model = db.OTSMembers
+                .Where(r => r.LastName.Contains(lastName));
+                return View(model);
+            }
+            else { 
+                var model = db.OTSMembers
+                .Where(r => r.Email.Equals(searchEmail, StringComparison.InvariantCultureIgnoreCase));
+                return View(model);
+            }
+        }
+        public ActionResult SearchByEmail(string searchEmail = null)
+        {
+            var model = db.OTSMembers
+                .Where(r => r.Email.Equals(searchEmail,StringComparison.InvariantCultureIgnoreCase));
+            return PartialView(model);
         }
 
         // GET: OtsMembers/Details/5
@@ -59,6 +88,7 @@ namespace OTSMembers.Controllers
         }
 
         // GET: OtsMembers/Edit/5
+        [Authorize()]
         public ActionResult Edit(int? id)
         {
             if (id == null)

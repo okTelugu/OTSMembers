@@ -12,11 +12,6 @@ namespace OTSMembers.Controllers
 
         OtsDb _db = new OtsDb();
 
-        public ActionResult Sponsorships(int memberID)
-        {
-            var model = _db.OTSMembers.
-        }
-
         public ActionResult Index()
         {
             var model = _db.OTSMembers.ToList();

@@ -10,9 +10,8 @@ namespace OTSMembers.Models
     {
         public OtsDb() : base("name=DefaultConnection")
         {
-
         }
-        public DbSet<OtsMember> OTSMembers{ get; set; }
-        public DbSet<MemberSponsorship> Sponsorships{ get; set; }
+        public DbSet<OtsMember> OTSMembers { get; set; }
+        public DbSet<MemberSponsorship> Sponsorships { get; set; }
     }
 }

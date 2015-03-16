@@ -161,6 +161,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MemberSponsorshipsController.cs" />
     <Compile Include="Controllers\OtsMembersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -189,6 +190,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\directoryFormValidation.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -243,7 +245,14 @@
     <Content Include="Views\OtsMembers\Details.cshtml" />
     <Content Include="Views\OtsMembers\Edit.cshtml" />
     <Content Include="Views\OtsMembers\Index.cshtml" />
-    <Content Include="Views\OtsMembers\_Sponsorships.cshtml" />
+    <Content Include="Views\OtsMembers\Sponsorships.cshtml" />
+    <Content Include="Views\OtsMembers\SearchByEmail.cshtml" />
+    <Content Include="Views\MemberSponsorships\Create.cshtml" />
+    <Content Include="Views\MemberSponsorships\Delete.cshtml" />
+    <Content Include="Views\MemberSponsorships\Details.cshtml" />
+    <Content Include="Views\MemberSponsorships\Edit.cshtml" />
+    <Content Include="Views\MemberSponsorships\Index.cshtml" />
+    <Content Include="Views\MemberSponsorships\PaypalPmt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

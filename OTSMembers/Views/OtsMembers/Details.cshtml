@@ -79,12 +79,17 @@
         </div>
 </form>
 </div>
+
+<p>
+    <a class="btn-lg" href=@Url.Action("Create", "MemberSponsorships", new { memberId = Model.id })> Renew your membership here. </a>
+</p>
+
 <p>
     @Html.ActionLink("Edit Member Information", "Edit", new { id = Model.id }) |
     @Html.ActionLink("Back to Search", "Index")
 </p>
 <h3>Sponsorship History</h3>
 <hr />
-    @Html.Partial("_Sponsorships",Model.Sponsorship)
+    @Html.Action("Sponsorships",new{memberId = Model.id})
 
 <hr />
