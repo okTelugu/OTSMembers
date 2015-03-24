@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Oklahoma Telugu Sangham</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -12,17 +12,29 @@
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("OkTelugu.org", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("OkTelugu.org", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    <a class="navbar-brand" rel="home" href="#" title="Oklahoma Telugu Sangham(OTS)">
+                        <img style="max-width:50px; margin-top: -7px;"
+                             src="http://www.oktelugu.org/joomla/templates/beez/images/logo.gif">
+                    </a>
+</div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Home", "Index","Home")</li>
+                    <li>@Html.ActionLink("Membership Details","Index","OTSMembers")</li>
+                    <li>@Html.ActionLink("Directory", "Directory", "OTSMembers")</li>
+                        @if (Request.IsAuthenticated && User.IsInRole("Administrator")) {
+                            <li>@Html.ActionLink("Roles Administration", "Index", "RolesAdmin")</li>
+                            <li>@Html.ActionLink("Users Administration", "Index", "UsersAdmin")</li>
+                        }
+                    @if (Request.IsAuthenticated && (User.IsInRole("Administrator") || User.IsInRole("Committee")))
+                    {
+                        <li>@Html.ActionLink("Member Sponsorships", "Index", "MemberSponsorships")</li>
+                    }                        
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -21,8 +21,29 @@ namespace OTSMembers.Controllers
         }
 
         // GET: OtsMembers
-        //[Authorize(Roles="Admin")]
+        [Authorize]
         public ActionResult Index(string searchEmail = null, string firstName =null, string lastName =null)
+        {
+
+            if (User.Identity.Name != null)
+            {
+                var model = db.OTSMembers
+                .Where(r => r.Email.Equals(User.Identity.Name, StringComparison.InvariantCultureIgnoreCase));
+                return View(model);
+            }
+            else if (lastName != null)
+            {
+                var model = db.OTSMembers
+                .Where(r => r.LastName.Contains(lastName));
+                return View(model);
+            }
+            else { 
+                var model = db.OTSMembers
+                .Where(r => r.Email.Equals(searchEmail, StringComparison.InvariantCultureIgnoreCase));
+                return View(model);
+            }
+        }
+        public ActionResult Directory(string searchEmail = null, string firstName = null, string lastName = null)
         {
             if (searchEmail != null)
             {
@@ -36,7 +57,8 @@ namespace OTSMembers.Controllers
                 .Where(r => r.LastName.Contains(lastName));
                 return View(model);
             }
-            else { 
+            else
+            {
                 var model = db.OTSMembers
                 .Where(r => r.Email.Equals(searchEmail, StringComparison.InvariantCultureIgnoreCase));
                 return View(model);

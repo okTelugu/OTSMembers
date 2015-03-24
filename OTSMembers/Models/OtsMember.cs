@@ -22,10 +22,15 @@ namespace OTSMembers.Models
         [Required(ErrorMessage = "Email must be entered.")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+        [Required(ErrorMessage = "Please enter a valid street address.")]
         [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
+        [Required(ErrorMessage = "Please enter a valid City.")]
         public string City { get; set; }
+        [Required(ErrorMessage = "Please enter a valid State.")]
         public string State { get; set; }
+        [RegularExpression(@"/(^\d{5}(-\d{4})?)$/", ErrorMessage = " Zip code must be 5 characters length")] 
+        [Display(Name="Zip")]
         public int Zip { get; set; }
         public string Notes { get; set; }
         [Display(Name = "Okay to publish to the directory?")]

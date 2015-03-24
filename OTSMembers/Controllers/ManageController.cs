@@ -124,7 +124,26 @@ namespace OTSMembers.Controllers
         }
 
         //
-        // POST: /Manage/EnableTwoFactorAuthentication
+        // POST: /Manage/RememberBrowser
+        [HttpPost]
+        public ActionResult RememberBrowser()
+        {
+            var rememberBrowserIdentity = AuthenticationManager.CreateTwoFactorRememberBrowserIdentity(User.Identity.GetUserId());
+            AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = true }, rememberBrowserIdentity);
+            return RedirectToAction("Index", "Manage");
+        }
+
+        //
+        // POST: /Manage/ForgetBrowser
+        [HttpPost]
+        public ActionResult ForgetBrowser()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
+            return RedirectToAction("Index", "Manage");
+        }
+
+        //
+        // POST: /Manage/EnableTFA
         [HttpPost]
         public async Task<ActionResult> EnableTwoFactorAuthentication()
         {

@@ -7,15 +7,13 @@ using System.Web.Mvc;
 
 namespace OTSMembers.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
 
-        OtsDb _db = new OtsDb();
-
         public ActionResult Index()
         {
-            var model = _db.OTSMembers.ToList();
-            return View(model);
+            return View();
         }
 
         public ActionResult About()
@@ -30,15 +28,6 @@ namespace OTSMembers.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (_db != null)
-            {
-                _db.Dispose();
-            }
-            base.Dispose(disposing);
-
         }
     }
 }

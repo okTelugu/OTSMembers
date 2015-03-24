@@ -41,7 +41,7 @@ namespace OTSMembers.Controllers
             Session["PrevUrl"] = Request.UrlReferrer;
             string tempUrl = Session["PrevUrl"].ToString();
             var member = db.OTSMembers.Where(m => m.id == memberId);
-            ViewBag.Title = member.Select(m => m.FirstName) +","+ member.Select(m => m.LastName);
+            //ViewBag.Title = member.Select(m => m.FirstName) +","+ member.Select(m => m.LastName);
             MemberSponsorship memberSponsorship = new MemberSponsorship { OtsMember_id = memberId, PaymentDate = DateTime.Today };
             return View(memberSponsorship);
         }
@@ -51,7 +51,7 @@ namespace OTSMembers.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,PaymentDate,Amount,TypeOfPayment,ReferredBy,PaymentID,Occassion,OtsMember_id")] MemberSponsorship memberSponsorship)
+        public ActionResult Create([Bind(Include = "Id,PaymentDate,Amount,TypeOfPayment,ReferredBy,PaymentID,Occassion,Notes,OtsMember_id")] MemberSponsorship memberSponsorship)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +83,7 @@ namespace OTSMembers.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,PaymentDate,Amount,TypeOfPayment,ReferredBy,PaymentID,Occassion,OtsMember_id")] MemberSponsorship memberSponsorship)
+        public ActionResult Edit([Bind(Include = "Id,PaymentDate,Amount,TypeOfPayment,ReferredBy,PaymentID,Occassion,verificationStatus, OtsMember_id")] MemberSponsorship memberSponsorship)
         {
             if (ModelState.IsValid)
             {

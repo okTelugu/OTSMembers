@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             <label class="col-sm-2 control-label">@Html.DisplayNameFor(model => model.Notes)</label>
             <div class="col-sm-10">
                 <p class="form-control-static">@Html.DisplayFor(model => model.Notes)</p>
@@ -76,10 +76,11 @@
             <div class="col-sm-10">
                 <p class="form-control-static">@Html.DisplayFor(model => model.OkToPublish)</p>
             </div>
-        </div>
+        </div>*@
 </form>
 </div>
-
+@if (Request.IsAuthenticated && (User.IsInRole("Administrator") || User.IsInRole("Committee") || User.Identity.Name.Equals(Model.Email,StringComparison.InvariantCultureIgnoreCase)))
+{ 
 <p>
     <a class="btn-lg" href=@Url.Action("Create", "MemberSponsorships", new { memberId = Model.id })> Renew your membership here. </a>
 </p>
@@ -93,3 +94,4 @@
     @Html.Action("Sponsorships",new{memberId = Model.id})
 
 <hr />
+}

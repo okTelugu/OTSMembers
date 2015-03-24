@@ -13,5 +13,9 @@ namespace OTSMembers.Models
         }
         public DbSet<OtsMember> OTSMembers { get; set; }
         public DbSet<MemberSponsorship> Sponsorships { get; set; }
+
+        public System.Data.Entity.DbSet<OTSMembers.Models.RoleViewModel> RoleViewModels { get; set; }
+
+        public System.Data.Entity.DbSet<OTSMembers.Models.EditUserViewModel> EditUserViewModels { get; set; }
     }
 }
