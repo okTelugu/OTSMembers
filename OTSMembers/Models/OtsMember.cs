@@ -10,26 +10,28 @@ namespace OTSMembers.Models
     {
         public int id { get; set; }
         [Required(ErrorMessage="First Name must be entered.")]
-        [MinLength(2)]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "Invalid First Name")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
         [Required(ErrorMessage = "Last Name must be entered.")]
         [Display(Name = "Last Name")]
-        [MinLength(2)]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "Invalid Last Name")]
         public string LastName { get; set; }
         [Display (Name="Spouse Name")]
+        [StringLength(30, MinimumLength = 0, ErrorMessage = "Invalid Spouse Name")]
         public string SpouseName { get; set; }
-        [Required(ErrorMessage = "Email must be entered.")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         [Required(ErrorMessage = "Please enter a valid street address.")]
         [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
+        [StringLength(30, MinimumLength = 2, ErrorMessage = "Invalid City Name")]
         [Required(ErrorMessage = "Please enter a valid City.")]
         public string City { get; set; }
+        [StringLength(30, MinimumLength = 2, ErrorMessage = "Invalid State Name")]
         [Required(ErrorMessage = "Please enter a valid State.")]
         public string State { get; set; }
-        [RegularExpression(@"/(^\d{5}(-\d{4})?)$/", ErrorMessage = " Zip code must be 5 characters length")] 
+        [RegularExpression(@"^\d{5}(?:[-\s]\d{4})?$", ErrorMessage = " Zip code must be 5 characters length")] 
         [Display(Name="Zip")]
         public int Zip { get; set; }
         public string Notes { get; set; }

@@ -25,7 +25,8 @@ namespace OTSMembers.Models
         public DateTime PaymentDate{ get; set; }
         [Display(Name = "Sponsorship Amount")]
         [DataType(DataType.Currency)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:f2}")]
+        [Range(1,10000000,ErrorMessage="Please enter a valid amount.")]
         [Required(ErrorMessage = "Please enter a valid amount.")]
         public decimal Amount { get; set; }
         [Display(Name = "Mode of Payment")]

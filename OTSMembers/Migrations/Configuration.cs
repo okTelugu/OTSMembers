@@ -15,7 +15,7 @@ namespace OTSMembers.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "OTSMembers.Models.OtsDb";
         }
 

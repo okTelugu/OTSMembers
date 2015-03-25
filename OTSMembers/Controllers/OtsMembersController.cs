@@ -43,6 +43,16 @@ namespace OTSMembers.Controllers
                 return View(model);
             }
         }
+        [Authorize]
+        public ActionResult MembersList()
+        {
+            var model = db.OTSMembers;
+            if (model == null)
+            {
+                return HttpNotFound("Member List Not Found"); //TODO: CHANGE THIS TO A NICER MESSAGE BOX.
+            }
+            return View(model);
+        }
         public ActionResult Directory(string searchEmail = null, string firstName = null, string lastName = null)
         {
             if (searchEmail != null)
@@ -71,6 +81,19 @@ namespace OTSMembers.Controllers
             return PartialView(model);
         }
 
+        public ActionResult MemberName(int? OtsMember_id)
+        {
+            if (OtsMember_id == null)
+            {
+                return Content("");
+            }
+            OtsMember otsMember = db.OTSMembers.Find(OtsMember_id);
+            if (otsMember == null)
+            {
+                return Content("");
+            }
+            return Content(otsMember.FirstName + "," + otsMember.LastName);
+        }
         // GET: OtsMembers/Details/5
         public ActionResult Details(int? id)
         {
@@ -97,10 +120,11 @@ namespace OTSMembers.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,FirstName,LastName,SpouseName,Email,StreetAddress,City,State,Zip,Notes,OkToPublish")] OtsMember otsMember)
+        public ActionResult Create([Bind(Include = "id,FirstName,LastName,SpouseName,StreetAddress,City,State,Zip,Notes,OkToPublish")] OtsMember otsMember)
         {
             if (ModelState.IsValid)
             {
+                otsMember.Email = User.Identity.Name;
                 db.OTSMembers.Add(otsMember);
                 db.SaveChanges();
                 return RedirectToAction("Index");

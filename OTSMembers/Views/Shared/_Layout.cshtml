@@ -33,7 +33,8 @@
                         }
                     @if (Request.IsAuthenticated && (User.IsInRole("Administrator") || User.IsInRole("Committee")))
                     {
-                        <li>@Html.ActionLink("Member Sponsorships", "Index", "MemberSponsorships")</li>
+                        <li>@Html.ActionLink("Sponsorships", "Index", "MemberSponsorships")</li>
+                        <li>@Html.ActionLink("Members List", "MembersList","OTSMembers")</li>
                     }                        
                 </ul>
                 @Html.Partial("_LoginPartial")
