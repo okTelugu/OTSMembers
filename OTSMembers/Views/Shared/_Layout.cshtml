@@ -8,8 +8,49 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+    @*<nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Link</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>*@
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
@@ -19,28 +60,40 @@
                     @Html.ActionLink("OkTelugu.org", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                     <a class="navbar-brand" rel="home" href="#" title="Oklahoma Telugu Sangham(OTS)">
                         <img style="max-width:50px; margin-top: -7px;"
-                             src="http://www.oktelugu.org/joomla/templates/beez/images/logo.gif">
+                             src="http://www.oktelugu.org/templates/beez/images/logo.gif">
                     </a>
-</div>
+            </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index","Home")</li>
                     <li>@Html.ActionLink("Membership Details","Index","OTSMembers")</li>
                     <li>@Html.ActionLink("Directory", "Directory", "OTSMembers")</li>
-                        @if (Request.IsAuthenticated && User.IsInRole("Administrator")) {
+                    @if (Request.IsAuthenticated && User.IsInRole("Administrator")){
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administration <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
                             <li>@Html.ActionLink("Roles Administration", "Index", "RolesAdmin")</li>
                             <li>@Html.ActionLink("Users Administration", "Index", "UsersAdmin")</li>
+                        </ul>
+                    </li>
                         }
                     @if (Request.IsAuthenticated && (User.IsInRole("Administrator") || User.IsInRole("Committee")))
                     {
-                        <li>@Html.ActionLink("Sponsorships", "Index", "MemberSponsorships")</li>
-                        <li>@Html.ActionLink("Members List", "MembersList","OTSMembers")</li>
-                    }                        
-                </ul>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Committee <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Sponsorships", "Index", "MemberSponsorships")</li>
+                            <li>@Html.ActionLink("Members List", "MembersList","OTSMembers")</li>
+                            <li>@Html.ActionLink("Expenses", "Index", "Expense")</li>
+                        </ul>
+                    </li>
+                     }
+
                 @Html.Partial("_LoginPartial")
+                    </ul>
             </div>
         </div>
-    </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />

@@ -3,6 +3,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.TransactionId)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.PaymentDate)
         </th>
         <th>
@@ -27,6 +30,9 @@
 
 @foreach (var item in Model) {
     <tr>
+        <th>
+            @Html.DisplayFor(modelItem => item.TransactionId)
+        </th>
         <td>
             @Html.DisplayFor(modelItem => item.PaymentDate)
         </td>

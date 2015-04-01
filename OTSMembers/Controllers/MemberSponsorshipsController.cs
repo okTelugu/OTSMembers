@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OTSMembers.Models;
+using System.Security.Cryptography;
 
 namespace OTSMembers.Controllers
 {
@@ -55,12 +56,87 @@ namespace OTSMembers.Controllers
         {
             if (ModelState.IsValid)
             {
+                memberSponsorship.TransactionId = GenerateTransactionID(memberSponsorship);
                 db.Sponsorships.Add(memberSponsorship);
                 db.SaveChanges();
-                string tempUrl = Session["PrevUrl"].ToString();
-                return Redirect(tempUrl);
+                var address = db.OTSAddresses.FirstOrDefault();
+                PaymentInstructionsVM paymentIns = new PaymentInstructionsVM
+                                    {
+                                        MemberId = memberSponsorship.OtsMember_id,
+                                        TransactionID = memberSponsorship.TransactionId,
+                                        StreetAddress1 = address.StreetAddress1,
+                                        StreetAddress2 = address.StreetAddress2,
+                                        City = address.City,
+                                        State = address.State,
+                                        Zip = address.Zip,
+                                        TypeofPayment = memberSponsorship.TypeOfPayment,
+                                        Amount =memberSponsorship.Amount
+                                    };
+                TempData["paymentInstructions"] = paymentIns;
+                return RedirectToAction("Thankyou");
+                //string tempUrl = Session["PrevUrl"].ToString();
+                //return Redirect(tempUrl);
             }
             return View(memberSponsorship);
+        }
+    
+        public ActionResult Thankyou()
+        {
+            var model = TempData["paymentInstructions"] as PaymentInstructionsVM;
+            return View(model);
+        }
+
+        private string GenerateTransactionID(MemberSponsorship memberSponsorship)
+        {
+            string transId = "000";
+            var randId = RandomThreadSafe.Next();
+            
+            transId = 
+                //memberSponsorship.OtsMember_id.ToString()
+                //+ memberSponsorship.PaymentDate.Year.ToString()
+                //+ memberSponsorship.PaymentDate.Day.ToString()
+                //+ memberSponsorship.PaymentDate.Month.ToString()+
+                randId.ToString();
+
+            switch(memberSponsorship.TypeOfPayment){
+                case OTSMembers.Models.MemberSponsorship.ModeOfPayment.Online :
+                    transId = "ONL-" + transId;
+                    break;
+                case OTSMembers.Models.MemberSponsorship.ModeOfPayment.Cash:
+                    transId = "CSH-" + transId;
+                    break;
+                case OTSMembers.Models.MemberSponsorship.ModeOfPayment.CreditCard_Manual_Swipe:
+                    transId = "CCM-" + transId;
+                    break;
+                case OTSMembers.Models.MemberSponsorship.ModeOfPayment.Check:
+                    transId = "CHK-" + transId;
+                    break;
+                default :
+                    break;
+
+            }
+            return (transId);
+        }
+
+        private class RandomThreadSafe
+        {
+            private static RNGCryptoServiceProvider _global = 
+            new RNGCryptoServiceProvider();
+            [ThreadStatic]
+            private static Random _local;
+            public static int Next()
+            {
+                Random inst = _local;
+                if (inst == null)
+                {
+                    byte[] buffer = new byte[4];
+                    _global.GetBytes(buffer);
+                    _local = inst = new Random(
+                        BitConverter.ToInt32(buffer, 0));
+                }
+                return inst.Next();
+            }
+
         }
 
         // GET: MemberSponsorships/Edit/5

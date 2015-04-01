@@ -44,5 +44,6 @@ namespace OTSMembers.Models
         [Display(Name="Notes if any")]
         [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
+        public string TransactionId { get; set; }
     }
 }

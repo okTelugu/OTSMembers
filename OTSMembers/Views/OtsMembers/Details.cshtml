@@ -87,13 +87,13 @@
     <br />
     <br />
     <p>
-        @Html.ActionLink("Edit Member Information", "Edit", new { id = Model.id }, new { @class = "btn-primary btn-lg" })
+        @Html.ActionLink("Edit Member Information", "Edit", new { id = Model.id }, new { @class = "btn btn-primary" })
         <br />
         <br />
     </p>
     <p>
-        @*@Html.ActionLink("Back", "Index", null, new { @class = "btn-primary btn-lg" })*@
-        <a class="btn-primary btn-lg" href=" javascript:void(0);" onclick="history.go(-1);">Back</a>
+        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+        @*<a class="btn-primary btn-lg" href=" javascript:void(0);" onclick="history.go(-1);">Back</a>*@
     </p>
     
 <h3>Sponsorship History</h3>
