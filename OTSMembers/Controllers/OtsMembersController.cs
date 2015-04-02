@@ -7,6 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OTSMembers.Models;
+using MailChimp;
+using MailChimp.Lists;
+using System.Runtime.Serialization;
+using System.Collections;
+using System.IO;
+using System.Xml;
+using MailChimp.Helper;
+
 
 namespace OTSMembers.Controllers
 {
@@ -125,12 +133,52 @@ namespace OTSMembers.Controllers
             if (ModelState.IsValid)
             {
                 otsMember.Email = User.Identity.Name;
+                AddThisMemberToMailChimp(otsMember);
                 db.OTSMembers.Add(otsMember);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             return View(otsMember);
+        }
+        [DataContract()]
+        public class MyMergeVar : MergeVar
+        {
+            [DataMember(Name = "FNAME")]
+            public string FirstName { get; set; }
+            [DataMember(Name = "LNAME")]
+            public string LastName { get; set; }
+        }
+        private void AddThisMemberToMailChimp(OtsMember otsMember)
+        {
+
+            MyMergeVar myMergeVars = new MyMergeVar();
+            //myMergeVars.Groupings = new List<Grouping>();
+            //myMergeVars.Groupings.Add(new Grouping());
+            //myMergeVars.Groupings[0].Id = 1234; // replace with your grouping id
+            //myMergeVars.Groupings[0].GroupNames = new List<string>();
+            //myMergeVars.Groupings[0].GroupNames.Add("Your Group Name");
+            myMergeVars.FirstName = otsMember.FirstName;
+            myMergeVars.LastName = otsMember.LastName;
+
+            MailChimpManager mc = new MailChimpManager("78c45040af2421f3ce69b8a8961189ff-us4");
+
+            //  Create the email parameter
+            EmailParameter email = new EmailParameter()
+            {
+                Email = otsMember.Email
+            };
+            try
+            {
+                EmailParameter results = mc.Subscribe("17decdb0b8", email, myMergeVars);
+            }
+            catch
+            {
+                // TODO: pop up a message saying could not subscribe to the email list. 
+                //Please contact president@Oktelugu.org to have the member added manually to the list.
+            }
+
+
         }
 
         // GET: OtsMembers/Edit/5

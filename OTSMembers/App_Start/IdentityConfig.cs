@@ -174,7 +174,7 @@ namespace OTSMembers.Models
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
             const string name = "ots.president@gmail.com";
             const string password = "Ots12345$";
-            const string roleName = "Admin";
+            const string roleName = "Administrator";
 
             //Create Role Admin if it does not exist
             var role = roleManager.FindByName(roleName);
