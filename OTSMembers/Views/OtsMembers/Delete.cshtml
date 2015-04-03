@@ -96,7 +96,14 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @if (Request.IsAuthenticated && (User.IsInRole("Administrator") || User.IsInRole("Committee")))
+            {
+                @Html.ActionLink("Back", "MembersList", null, new { @class = "btn btn-default" })
+            }
+            else
+            {
+                @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+            }
         </div>
     }
 </div>

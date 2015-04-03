@@ -141,6 +141,31 @@ namespace OTSMembers.Controllers
 
             return View(otsMember);
         }
+
+        // GET: OtsMembers/Create
+        public ActionResult CreateMember()
+        {
+            return View();
+        }
+
+        // POST: OtsMembers/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateMember([Bind(Include = "id,FirstName,LastName,SpouseName,StreetAddress,City,State,Zip,Notes,Email,OkToPublish")] OtsMember otsMember)
+        {
+            if (ModelState.IsValid)
+            {
+                AddThisMemberToMailChimp(otsMember);
+                db.OTSMembers.Add(otsMember);
+                db.SaveChanges();
+                return RedirectToAction("MembersList");
+            }
+
+            return View(otsMember);
+        }
+
         [DataContract()]
         public class MyMergeVar : MergeVar
         {
@@ -236,7 +261,7 @@ namespace OTSMembers.Controllers
             OtsMember otsMember = db.OTSMembers.Find(id);
             db.OTSMembers.Remove(otsMember);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("MembersList");
         }
 
         protected override void Dispose(bool disposing)

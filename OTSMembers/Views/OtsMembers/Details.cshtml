@@ -82,7 +82,7 @@
 @if (Request.IsAuthenticated && (User.IsInRole("Administrator") || User.IsInRole("Committee") || User.Identity.Name.Equals(Model.Email,StringComparison.InvariantCultureIgnoreCase)))
 { 
 <p>
-    <a class="btn-primary btn-lg" href=@Url.Action("Create", "MemberSponsorships", new { memberId = Model.id })> Renew your membership</a>
+    <a class="btn-primary btn-lg" href=@Url.Action("Create", "MemberSponsorships", new { memberId = Model.id })> Renew membership</a>
 </p>
     <br />
     <br />
@@ -92,7 +92,15 @@
         <br />
     </p>
     <p>
-        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+        @if (Request.IsAuthenticated && (User.IsInRole("Administrator") || User.IsInRole("Committee")))
+        {
+            @Html.ActionLink("Back", "MembersList", null, new { @class = "btn btn-default" })
+        }
+        else
+        {
+            @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+        }
+        
         @*<a class="btn-primary btn-lg" href=" javascript:void(0);" onclick="history.go(-1);">Back</a>*@
     </p>
     

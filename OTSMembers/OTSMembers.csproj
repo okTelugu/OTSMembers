@@ -338,6 +338,7 @@
     <Content Include="Views\OTSAddresses\Edit.cshtml" />
     <Content Include="Views\OTSAddresses\Index.cshtml" />
     <Content Include="Views\MemberSponsorships\Thankyou.cshtml" />
+    <Content Include="Views\OtsMembers\CreateMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
