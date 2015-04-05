@@ -55,6 +55,7 @@ namespace OTSMembers.Controllers
         public ActionResult MembersList()
         {
             var model = db.OTSMembers;
+
             if (model == null)
             {
                 return HttpNotFound("Member List Not Found"); //TODO: CHANGE THIS TO A NICER MESSAGE BOX.
@@ -128,7 +129,7 @@ namespace OTSMembers.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,FirstName,LastName,SpouseName,StreetAddress,City,State,Zip,Notes,OkToPublish")] OtsMember otsMember)
+        public ActionResult Create([Bind(Include = "id,FirstName,LastName,SpouseName,StreetAddress,City,State,Zip,Notes,Phone1,Phone2,OkToPublish")] OtsMember otsMember)
         {
             if (ModelState.IsValid)
             {
@@ -153,7 +154,7 @@ namespace OTSMembers.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateMember([Bind(Include = "id,FirstName,LastName,SpouseName,StreetAddress,City,State,Zip,Notes,Email,OkToPublish")] OtsMember otsMember)
+        public ActionResult CreateMember([Bind(Include = "id,FirstName,LastName,SpouseName,StreetAddress,City,State,Zip,Notes,Email,Phone1,Phone2,OkToPublish")] OtsMember otsMember)
         {
             if (ModelState.IsValid)
             {
@@ -195,7 +196,7 @@ namespace OTSMembers.Controllers
             };
             try
             {
-                EmailParameter results = mc.Subscribe("17decdb0b8", email, myMergeVars);
+                EmailParameter results = mc.Subscribe("17decdb0b8", email, myMergeVars,doubleOptIn: false);
             }
             catch
             {
@@ -227,7 +228,7 @@ namespace OTSMembers.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,FirstName,LastName,SpouseName,Email,StreetAddress,City,State,Zip,Notes,OkToPublish")] OtsMember otsMember)
+        public ActionResult Edit([Bind(Include = "id,FirstName,LastName,SpouseName,Email,StreetAddress,City,State,Zip,Notes,Phone1,Phone2,OkToPublish")] OtsMember otsMember)
         {
             if (ModelState.IsValid)
             {

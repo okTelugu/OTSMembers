@@ -19,5 +19,6 @@ namespace OTSMembers.Models
         public DbSet<OTSMembers.Models.RoleViewModel> RoleViewModels { get; set; }
         public DbSet<OTSMembers.Models.EditUserViewModel> EditUserViewModels { get; set; }
         public DbSet<OTSMembers.Models.OTSAddress> OTSAddresses { get; set; }
+        public DbSet<C2013> _20131 { get; set; }
     }
 }

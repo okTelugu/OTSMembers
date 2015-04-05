@@ -34,6 +34,10 @@ namespace OTSMembers.Models
         [RegularExpression(@"^\d{5}(?:[-\s]\d{4})?$", ErrorMessage = " Zip code must be 5 characters length")] 
         [Display(Name="Zip")]
         public int Zip { get; set; }
+        [Display(Name = "Phone Number 1")]
+        public string Phone1 { get; set; }
+        [Display(Name = "Phone Number 2")]
+        public string Phone2 { get; set; }
         public string Notes { get; set; }
         [Display(Name = "Okay to publish to the directory?")]
         public bool OkToPublish { get; set; }
