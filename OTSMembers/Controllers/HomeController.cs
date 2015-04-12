@@ -8,9 +8,10 @@ using System.Web.Mvc;
 namespace OTSMembers.Controllers
 {
     [RequireHttps]
+
     public class HomeController : Controller
     {
-
+        private OtsDb db = new OtsDb();
         public ActionResult Index()
         {
             return View();
@@ -18,16 +19,16 @@ namespace OTSMembers.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "About OTS Services";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "You can mail your donations or sponsorships to :";
+            return View(db.OTSAddresses.ToList());
 
-            return View();
         }
     }
 }

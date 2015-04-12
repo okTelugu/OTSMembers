@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using OTSMembers.Models;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
+using Mandrill;
 
 namespace OTSMembers.Controllers
 {
@@ -52,7 +54,7 @@ namespace OTSMembers.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,PaymentDate,Amount,TypeOfPayment,ReferredBy,PaymentID,Occassion,Notes,OtsMember_id")] MemberSponsorship memberSponsorship)
+        public async Task<ActionResult> Create([Bind(Include = "Id,PaymentDate,Amount,TypeOfPayment,ReferredBy,PaymentID,Occassion,Notes,OtsMember_id")] MemberSponsorship memberSponsorship)
         {
             if (ModelState.IsValid)
             {
@@ -60,6 +62,7 @@ namespace OTSMembers.Controllers
                 db.Sponsorships.Add(memberSponsorship);
                 db.SaveChanges();
                 var address = db.OTSAddresses.FirstOrDefault();
+
                 PaymentInstructionsVM paymentIns = new PaymentInstructionsVM
                                     {
                                         MemberId = memberSponsorship.OtsMember_id,
@@ -70,8 +73,21 @@ namespace OTSMembers.Controllers
                                         State = address.State,
                                         Zip = address.Zip,
                                         TypeofPayment = memberSponsorship.TypeOfPayment,
-                                        Amount =memberSponsorship.Amount
+                                        Amount =memberSponsorship.Amount,
+                                        Email = db.OTSMembers
+                                                .Where(m => m.id == memberSponsorship.OtsMember_id)
+                                                .Select(m => m.Email).ToList().First(),
+                                        FirstName = db.OTSMembers
+                                                .Where(m => m.id == memberSponsorship.OtsMember_id)
+                                                .Select(m => m.FirstName).ToList().First(),
+                                        LastName = db.OTSMembers
+                                                .Where(m => m.id == memberSponsorship.OtsMember_id)
+                                                .Select(m => m.LastName).ToList().First(),
+                                            
                                     };
+                EmailHelper emailhelper = new EmailHelper();
+                await emailhelper.SendTransactionEmail(paymentIns);
+                
                 TempData["paymentInstructions"] = paymentIns;
                 return RedirectToAction("Thankyou");
                 //string tempUrl = Session["PrevUrl"].ToString();
@@ -79,7 +95,8 @@ namespace OTSMembers.Controllers
             }
             return View(memberSponsorship);
         }
-    
+
+   
         public ActionResult Thankyou()
         {
             var model = TempData["paymentInstructions"] as PaymentInstructionsVM;
@@ -206,6 +223,70 @@ namespace OTSMembers.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+    }
+
+    public class EmailHelper
+    {
+        public Task SendTransactionEmail(PaymentInstructionsVM instructions)
+        {
+            //if (string.IsNullOrEmpty(instructions.Email)) {
+            //    return();
+            //}
+            var transactionMessage = new EmailMessage();
+
+            // Subject
+            transactionMessage.subject = "Thank you for your pledge!";
+            
+            //To address
+            EmailAddress toEmail = new EmailAddress { email = instructions.Email, name = instructions.FirstName + " " + instructions.LastName, type = "to" };
+            EmailAddress ccEmail = new EmailAddress { email = "president@oktelugu.org" , name = "OTS Treasurer", type = "cc" };
+            IEnumerable<EmailAddress> e1 = new EmailAddress[] { toEmail, ccEmail };
+            transactionMessage.to = e1;
+            
+            //From address
+            transactionMessage.from_email = "president@oktelugu.org";
+            transactionMessage.from_name = "OTS President";
+            
+            //Body
+            string name = (instructions.FirstName.Trim() + " " + instructions.LastName.Trim()).Trim();
+            transactionMessage.text = "Dear " + name + " garu," +
+                                      " Thank you for your pledge of " + instructions.Amount + "  Dollars." +
+                                      " Transaction number for your pledge is : "+ instructions.TransactionID +"."+
+                                      " If you want to mail your donations, please mail us to "+
+                                      "Oklahoma Telugu Sangham " + instructions.StreetAddress1 + " " +
+                                      instructions.StreetAddress2 + " " + instructions.City +" " + 
+                                      instructions.State + " " + instructions.Zip +" quoting the above transaction ID."+
+                                      "As soon as we recieve your payments and match with the pledge, we will update the pledge status on the website. If you made a donation online, you will get a seperate email confirmation." +
+                                      " On behalf of OTS executive committee and board we thank you for your"+ 
+                                      " continued support to the services of the organization. " + 
+                                      " If you have any feedback or suggestions on how we can improve the services, " + 
+                                      "please feel free to email us at any time. - Oklahoma Telugu Sangham";
+            transactionMessage.html = "<p>Dear " + name + " garu,</p>"+
+                                     "<p>Thank you for your pledge of <strong>" + instructions.Amount + "USD. </strong>" +
+                                        " Transaction number for your pledge is : <strong>" + instructions.TransactionID + "</strong>.</br>" +
+                                        " If you want to mail your donations, please mail us to: " +
+                                        "<strong>Oklahoma Telugu Sangham " + instructions.StreetAddress1 + " " +
+                                        instructions.StreetAddress2 + " " + instructions.City + " " +
+                                        instructions.State + " " + instructions.Zip + "</strong> quoting the above transaction ID. As soon as we recieve your payments and match with the pledge, we will update the pledge status on the website.</p><p> If you made a donation online, you will get a seperate email confirmation.</p></p>" +
+                                        " On behalf of OTS executive committee and board we thank you for your continued support to the services of the organization. If you have any feedback or suggestions on how we can improve the services, please feel free to email us at any time. </p>"+
+                                        "<p> - Oklahoma Telugu Sangham</p>"; 
+            
+            return configMandrillasyncSend(transactionMessage);
+
+        }
+
+        private Task configMandrillasyncSend(EmailMessage message)
+        {
+
+            MandrillApi api = new MandrillApi("C9iWQgGOhPjavOv6D1t0WQ");
+
+            var task = api.SendMessageAsync(message);
+
+            if (task.IsCompleted)
+                return Task.FromResult(true);
+            else
+                return Task.FromResult(false);
         }
     }
 }

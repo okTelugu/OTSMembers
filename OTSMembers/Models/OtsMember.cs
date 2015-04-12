@@ -22,9 +22,14 @@ namespace OTSMembers.Models
         public string SpouseName { get; set; }
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+        [DataType(DataType.EmailAddress)]
+        [Display(Name="Additional Email")]
+        public string OtherEmail { get; set; }
         [Required(ErrorMessage = "Please enter a valid street address.")]
         [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
+        [Display(Name = "Street Address Contd.")]
+        public string StreetAddress2 { get; set; }
         [StringLength(30, MinimumLength = 2, ErrorMessage = "Invalid City Name")]
         [Required(ErrorMessage = "Please enter a valid City.")]
         public string City { get; set; }
@@ -42,5 +47,10 @@ namespace OTSMembers.Models
         [Display(Name = "Okay to publish to the directory?")]
         public bool OkToPublish { get; set; }
         public IQueryable<MemberSponsorship> Sponsorship { get; set; }
+        public OtsMember()
+        {
+            OkToPublish = true;
+        }
     }
+    
 }

@@ -1,17 +1,52 @@
-﻿@{
+﻿@model IEnumerable<OTSMembers.Models.OTSAddress>
+@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 <h3>@ViewBag.Message</h3>
+<address class="bg-info">
+    <strong>Oklahoma Telugu Sangham</strong><br />
+    
+        @*<tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StreetAddress1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StreetAddress2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zip)
+            </th>
+            <th></th>
+        </tr>*@
 
-<<address class="bg-info">
-    <strong>One Microsoft Way</strong><br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
+        @foreach (var item in Model)
+        {
+ 
+            @Html.DisplayFor(modelItem => item.StreetAddress1) <br />
+            if (!item.StreetAddress2.IsEmpty())
+            {
+                @Html.DisplayFor(modelItem => item.StreetAddress2)    <br />
+            }
+
+            @Html.DisplayFor(modelItem => item.City) 
+            @:&nbsp;
+            @Html.DisplayFor(modelItem => item.State)    <br />
+
+            @Html.DisplayFor(modelItem => item.Zip)    <br />
+
+        }
+
+
 </address>
 
 <address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+    <h3>If you have any questions or trouble logging in, please email us.</h3>
+    <strong>Email:</strong>   <a href="mailto:President@Oktelugu.org">President@Oktelugu.org</a><br />
 </address>
