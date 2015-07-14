@@ -20,5 +20,7 @@ namespace OTSMembers.Models
         public DbSet<OTSMembers.Models.EditUserViewModel> EditUserViewModels { get; set; }
         public DbSet<OTSMembers.Models.OTSAddress> OTSAddresses { get; set; }
         public DbSet<C2013> _20131 { get; set; }
+
+        public System.Data.Entity.DbSet<OTSMembers.Models.PaidMembersVM> PaidMembersVMs { get; set; }
     }
 }

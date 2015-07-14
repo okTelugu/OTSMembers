@@ -1,0 +1,119 @@
+﻿@model IEnumerable<OTSMembers.Models.PaidMembersVM>
+
+
+@{
+    ViewBag.Title = "Paid Members List";
+}
+@if (Request.IsAuthenticated && (User.IsInRole("Administrator") || User.IsInRole("Committee")))
+{
+@Html.ActionLink("Go Back","CurrentMembersList")
+<h2>Paid Members List</h2>
+
+<table id="directoryTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.OtsMember_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpouseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OtherEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StreetAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StreetAddress2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnnualSponsorship)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int counter = 0;
+            foreach (var item in Model)
+            {
+                counter = counter + 1;
+                <tr>
+                    <td>
+                        @counter
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OtsMember_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SpouseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OtherEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StreetAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StreetAddress2)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.State)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Zip)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone2)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AnnualSponsorship)
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+}

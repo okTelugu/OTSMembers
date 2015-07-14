@@ -176,7 +176,7 @@ namespace OTSMembers.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,PaymentDate,Amount,TypeOfPayment,ReferredBy,PaymentID,Occassion,verificationStatus, OtsMember_id")] MemberSponsorship memberSponsorship)
+        public ActionResult Edit([Bind(Include = "Id,PaymentDate,Amount,TypeOfPayment,ReferredBy,PaymentID,Occassion,TransactionId, verificationStatus, OtsMember_id")] MemberSponsorship memberSponsorship)
         {
             if (ModelState.IsValid)
             {
@@ -224,8 +224,80 @@ namespace OTSMembers.Controllers
             }
             base.Dispose(disposing);
         }
-    }
+        public ActionResult CurrentMembersList()
+        {
+            return View();
+        }
+        public ActionResult PaidMembersList(int? year, decimal? amount, DateTime fromDate, DateTime toDate)
+        {
+            //List<PaidMembersVM> model = new List<PaidMembersVM>();
+            // build the list...
+            var sponsorsList = //db.Sponsorships.ToList().GroupBy(r=>r.OtsMember_id);
+            from s in db.Sponsorships 
+            group s by new {s.OtsMember_id} into g
+            select new {g.Key.OtsMember_id ,
+                        Sum = g.Sum(s => s.Amount)
+            };
 
+            var model = GetcurrentList(year, amount, fromDate, toDate);
+            return View(model);
+        }
+        private List<PaidMembersVM> GetcurrentList(int? year, decimal? amount, DateTime fromDate, DateTime toDate)
+        {
+         
+            var sponsorsList = 
+            from s in db.Sponsorships
+            where (System.Data.Entity.DbFunctions.TruncateTime(s.PaymentDate) >= fromDate.Date && System.Data.Entity.DbFunctions.TruncateTime(s.PaymentDate) <= toDate.Date)
+            group s by new { s.OtsMember_id } into g
+            select new
+            {
+                g.Key.OtsMember_id,
+                Sum = g.Sum(s => s.Amount)
+            };
+
+            var query =
+
+            (from s in sponsorsList
+             where s.Sum >= amount
+             join m in db.OTSMembers on s.OtsMember_id equals m.id
+             select new 
+             {
+                 s.OtsMember_id,
+                 m.FirstName,
+                 m.LastName,
+                 m.SpouseName,
+                 m.Email,
+                 m.OtherEmail,
+                 m.StreetAddress,
+                 m.StreetAddress2,
+                 m.City,
+                 m.State,
+                 m.Zip,
+                 m.Phone1,
+                 m.Phone2,
+                 s.Sum
+             }).ToList()
+             .Select( x =>new PaidMembersVM
+             {
+                 OtsMember_id = x.OtsMember_id,
+                 FirstName = x.FirstName,
+                 LastName = x.LastName,
+                 SpouseName = x.SpouseName,
+                 Email = x.Email,
+                 OtherEmail = x.OtherEmail,
+                 StreetAddress = x.StreetAddress,
+                 StreetAddress2 = x.StreetAddress2,
+                 City = x.City,
+                 State = x.State,
+                 Zip = x.Zip,
+                 Phone1 = x.Phone1,
+                 Phone2 = x.Phone2,
+                 AnnualSponsorship = x.Sum
+             });
+            return (query.ToList());
+        }
+
+    }
     public class EmailHelper
     {
         public Task SendTransactionEmail(PaymentInstructionsVM instructions)
@@ -288,5 +360,6 @@ namespace OTSMembers.Controllers
             else
                 return Task.FromResult(false);
         }
+
     }
 }

@@ -28,6 +28,7 @@ namespace OTSMembers
                       "~/Scripts/respond.js"));
             bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
                         "~/Scripts/DataTables/jquery.dataTables.js",
+                        "~/Scripts/DataTables/jquery.dataTables.tableTools.js",
                         "~/Scripts/jquery-{version}.min.js"));
 
             bundles.Add(new StyleBundle("~/bundles/datatables/css").Include(

@@ -94,6 +94,7 @@ namespace OTSMembers.Controllers
             }
             return Content(otsMember.FirstName + "," + otsMember.LastName);
         }
+
         // GET: OtsMembers/Details/5
         public ActionResult Details(int? id)
         {

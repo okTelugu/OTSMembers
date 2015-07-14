@@ -247,6 +247,7 @@
     <Compile Include="Models\OtsDb.cs" />
     <Compile Include="Models\OtsMember.cs" />
     <Compile Include="Models\OTSUserRoles.cs" />
+    <Compile Include="Models\PaidMembersVM.cs" />
     <Compile Include="Models\PaymentInstructionsVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -436,7 +437,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -516,6 +519,8 @@
     <Content Include="Views\MemberSponsorships\Thankyou.cshtml" />
     <Content Include="Views\OtsMembers\CreateMember.cshtml" />
     <Content Include="Views\OtsMembers\EditMember.cshtml" />
+    <Content Include="Views\MemberSponsorships\PaidMembersList.cshtml" />
+    <Content Include="Views\MemberSponsorships\CurrentMembersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
