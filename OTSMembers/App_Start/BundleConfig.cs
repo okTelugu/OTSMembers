@@ -13,10 +13,11 @@ namespace OTSMembers
                         "~/Scripts/OTSDataTables.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-2.1.4.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                        "~/Scripts/jquery.validate.min.js",
+                        "~/Scripts/jquery.validate.unobtrusive.min.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -24,17 +25,27 @@ namespace OTSMembers
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/bootstrap.min.js",
+                      "~/Scripts/respond.min.js"));
             bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
-                        "~/Scripts/DataTables/jquery.dataTables.js",
-                        "~/Scripts/DataTables/jquery.dataTables.tableTools.js",
-                        "~/Scripts/jquery-{version}.min.js"));
+                        "~/Scripts/DataTables/jquery.dataTables.min.js",
+                        "~/Scripts/DataTables/dataTables.jqueryui.js",
+                        "~/Scripts/DataTables/dataTables.tableTools.js"));
 
             bundles.Add(new StyleBundle("~/bundles/datatables/css").Include(
-                        "~/Content/DataTables/css/jquery.dataTables.css"));
+                        "~/Content/DataTables/css/jquery.dataTables.min.css",
+                        "~/Content/DataTables/css/dataTables.jqueryui.css",
+                        "~/Content/DataTables/css/dataTables.tableTools.css"
+                        ));
+//            •- jQuery-2.1.0.min.js
+//•- jquery-ui.min.js
+//•- jquery.dataTables.min.js
+//•- dataTables.jqueryui.js
+//•- dataTables.tableTools.js
+
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-            "~/Scripts/jquery-ui-{version}.js"));
+                 "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
